@@ -1,2 +1,28 @@
 # Partition-Equal-Subset-Sum
-https://www.youtube.com/redirect?event=video_description&amp;redir_token=QUFFLUhqbXlJdDdVN09yVmdzb2tVWHRCRC15WGhvUzVNQXxBQ3Jtc0trSWtwMEFPcndEZHVuXzFHaXdJVjNuSnBPcHdhVmg1aFlFRkxXNVZQUVBHcFd3Rl9IQ0I2Z05teWJJNmI4N09TWmRvYUthNUNyaldMd2VJQVNueVBjTEd1WHVCdU9xX1ZEemdFZE5IcHFMNVZTN0lxOA&amp;q=https%3A%2F%2Fbit.ly%2F34iIIsH&amp;v=7win3dcgo3k
+codestudio question->
+bool solution(int i,int target,vector<int> &arr,vector<vector<int>> &dp){
+    if(i==0) return(arr[0]==target);
+    if(target==0) return true;
+    if(dp[i][target]!=-1) return dp[i][target];
+    bool notake=solution(i-1,target,arr,dp);
+    bool take=false;
+    if(target>=arr[i])
+    take=solution(i-1,target-arr[i],arr,dp);
+    
+    return dp[i][target]=take||notake;
+}
+bool canPartition(vector<int> &arr, int n)
+{
+	// Write your code here.
+    int sum=0;
+    for(int i=0;i<n;i++){
+        sum+=arr[i];
+    }
+    if(sum%2!=0) return false;
+    else{
+    int target=sum/2;
+    vector<vector<int>> dp(n,vector<int>(target+1,-1));
+    return solution(n-1,target,arr,dp);
+    }
+}
+
